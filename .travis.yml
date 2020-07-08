@@ -1,0 +1,23 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    
+    - docker build -t kallis07/react-test -f ./client/Dockerfile.dev ./client
+script:
+    - docker run -e CI=true kallis07/react-test npm test
+      #check the client now,still error  
+after_success:
+    - docker build -t kallis07/multi-docker-client ./client
+    - docker build -t kallis07/multi-docker-nginx ./nginx
+    - docker build -t kallis07/multi-docker-server ./server
+    - docker build -t kallis07/multi-docker-worker ./worker
+    
+    # login to docker cli
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # take those images and push to docker hub
+    - docker push kallis07/multi-docker-client
+    - docker push kallis07/multi-docker-nginx
+    - docker push kallis07/multi-docker-server
+    - docker push kallis07/multi-docker-worker
