@@ -4,20 +4,23 @@
 			"name": "client",
 			"image": "kallis07/multidocker-client",
 			"hostname": "client",
-			"essential": false
+			"essential": false,
+			"memory": 128
 		},
 
 		{
 			"name": "server",
 			"image": "kallis07/multidocker-server",
 			"hostname": "api",
-			"essential": false
+			"essential": false,
+			"memory": 128
 		},
 		{
 			"name": "worker",
 			"image": "kallis07/multidocker-worker",
 			"hostname": "worker",
-			"essential": false
+			"essential": false,
+			"memory": 128
 		},
 
 		{
@@ -25,6 +28,7 @@
 			"image": "kallis07/multidocker-nginx",
 			"hostname": "nginx",
 			"essential": true,
+			"memory": 128,
 			"portMappings": [{
 				"hostPort": 80,
 				"containerPort": 80
