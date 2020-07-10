@@ -3,17 +3,17 @@ services:
     - docker
 
 before_install:
-    
+
     - docker build -t kallis07/react-test -f ./client/Dockerfile.dev ./client
 script:
     - docker run -e CI=true kallis07/react-test npm test
-      #check the client now,still error  
+      #check the client now,still error
 after_success:
     - docker build -t kallis07/multidocker-client ./client
     - docker build -t kallis07/multidocker-nginx ./nginx
     - docker build -t kallis07/multidocker-server ./server
     - docker build -t kallis07/multidocker-worker ./worker
-    
+
     # login to docker cli
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # take those images and push to docker hub
@@ -21,3 +21,16 @@ after_success:
     - docker push kallis07/multidocker-nginx
     - docker push kallis07/multidocker-server
     - docker push kallis07/multidocker-worker
+
+deploy:
+    edge: true
+    provider: elasticbeanstalk
+    region: us-east-2
+    app: multidocker
+    env: Multidocker-env
+    bucket_name: arn:aws:s3:::elasticbeanstalk-us-east-2-581109126430
+    bucket_path: multidocker
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
