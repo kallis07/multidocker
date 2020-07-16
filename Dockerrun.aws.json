@@ -5,10 +5,7 @@
 			"image": "kallis07/multidocker-client",
 			"hostname": "client",
 			"essential": false,
-			"memory": 128,
-			"command": [
-				"bin/bash"
-			]
+			"memory": 128
 		},
 
 		{
@@ -16,20 +13,14 @@
 			"image": "kallis07/multidocker-server",
 			"hostname": "api",
 			"essential": false,
-			"memory": 128,
-			"command": [
-				"bin/bash"
-			]
+			"memory": 128
 		},
 		{
 			"name": "worker",
 			"image": "kallis07/multidocker-worker",
 			"hostname": "worker",
 			"essential": false,
-			"memory": 128,
-			"command": [
-				"bin/bash"
-			]
+			"memory": 128
 		},
 
 		{
@@ -42,10 +33,7 @@
 				"containerPort": 80
 			}],
 			"links": ["client", "server"],
-			"memory": 128,
-			"command": [
-				"bin/bash"
-			]
+			"memory": 128
 		}
 
 	]
